@@ -2,6 +2,16 @@ name: 'Drupress Starter'
 description: 'Sets up the WordPress-style admin experience: Drupress modules, admin theme, and Gutenberg editor.'
 type: 'Site'
 
+# NOTE on config/*.yml in this recipe: a few files here (views.view.drupress_
+# posts/pages, filter.format.gutenberg, editor.editor.gutenberg) duplicate a
+# module's own config/install/*.yml. This is deliberate, not redundant: when
+# a module is installed as part of this recipe's `install:` batch, Drupal does
+# not reliably import that module's own config/install if it declares a
+# dependency on config this recipe itself creates (e.g. the views depend on
+# field.storage.node.field_category, which is created by this same recipe).
+# Shipping the config directly here guarantees dependency-ordered, reliable
+# installation. Verified by a from-scratch fresh-install test.
+
 recipes:
   # The WordPress content model, from core building blocks (site-owned config
   # that survives any Drupress uninstall, per the facade principle):
@@ -41,11 +51,6 @@ config:
     node.settings:
       simpleConfigUpdate:
         use_admin_theme: true
-    # The WP block editor for Posts and Pages.
-    gutenberg.settings:
-      simpleConfigUpdate:
-        article_enable_full: true
-        page_enable_full: true
     # Put the WP model fields on the post form.
     core.entity_form_display.node.article.default:
       setComponents:
@@ -59,5 +64,3 @@ config:
             type: media_library_widget
             weight: 13
             region: content
-
-# M6 (pending): editor role with WP-appropriate permissions.

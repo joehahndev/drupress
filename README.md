@@ -27,6 +27,8 @@ is a hard guarantee, not an aspiration:
   [`FacadeUninstallTest`](modules/drupress/tests/src/Kernel/FacadeUninstallTest.php):
   install the suite → create content → uninstall everything → assert all
   nodes, terms, fields and field data survive while Drupress config is gone.
+- It is also proven end to end by installing the recipe on a genuinely fresh
+  Drupal 11 site (no manual steps) and confirming every screen works.
 
 ### Known compromises (documented, never silent)
 
@@ -35,6 +37,7 @@ is a hard guarantee, not an aspiration:
 | Gutenberg editor | Block-comment markup (`<!-- wp:paragraph -->`) is stored inside the standard `body` field. | Content stays valid, renderable HTML, editable in CKEditor after uninstall. `drupress_editor`'s uninstall prints a warning about the residual comments. |
 | Navigation sidebar | `drupress_menu` swaps the core Navigation block layout on install. | The previous layout is backed up to state and **restored exactly** on uninstall (verified). |
 | Recipe | Drupal recipes apply **once**; site-owned config they create is intentionally left in place. | Re-running setup after changes uses the settings form's "create missing structures" action instead. |
+| Recipe config ordering | A newly-installed module's own `config/install/*.yml` is not reliably imported by Drupal when it depends on config the recipe itself creates in the same apply (observed for the Posts/Pages views and Gutenberg's text format). | The recipe ships those specific files directly (see the note atop `recipe.yml`); `drupress_menu` additionally creates its menu programmatically as a defensive fallback. Verified via a from-scratch fresh install. |
 
 ## Packages
 

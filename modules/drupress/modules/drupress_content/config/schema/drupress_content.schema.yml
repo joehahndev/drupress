@@ -9,3 +9,11 @@ views.filter.drupress_mapped_bundle:
 views.field.drupress_row_actions:
   type: views_field
   label: 'Drupress row actions'
+
+views.area.drupress_status_tabs:
+  type: views_area
+  label: 'Drupress status tabs'
+  mapping:
+    drupress_mapping_key:
+      type: string
+      label: 'Which WP mapping to build status tabs for (post or page)'

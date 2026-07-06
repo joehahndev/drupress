@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - gutenberg
+article_enable_full: 1
+page_enable_full: 1

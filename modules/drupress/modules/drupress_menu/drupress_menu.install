@@ -10,13 +10,35 @@ declare(strict_types=1);
 /**
  * Implements hook_install().
  *
- * Swaps the Drupress admin menu into core Navigation's sidebar layout.
+ * Ensures the Drupress admin menu exists, then swaps it into core
+ * Navigation's sidebar layout.
  *
- * This is the one documented case where Drupress modifies configuration it
- * does not own (navigation.block_layout). The previous layout is backed up
- * to state and restored on uninstall, keeping the change fully reversible.
+ * The menu is normally provided by config/install/system.menu.drupress-admin
+ * .yml, but when this module is installed as part of a batch (notably: a
+ * Drupal recipe installing many modules together), that default-config import
+ * does not reliably complete before hook_install() runs, leaving the
+ * "navigation_menu:drupress-admin" block with no menu to derive from. Create
+ * the menu programmatically here as a defensive, idempotent fallback, with
+ * the same enforced module dependency the YAML declares, so it is still
+ * cleaned up automatically on uninstall.
+ *
+ * Swapping the Navigation block layout is the one documented case where
+ * Drupress modifies configuration it does not own (navigation.block_layout).
+ * The previous layout is backed up to state and restored on uninstall,
+ * keeping the change fully reversible.
  */
 function drupress_menu_install(): void {
+  $menu_storage = \Drupal::entityTypeManager()->getStorage('menu');
+  if ($menu_storage->load('drupress-admin') === NULL) {
+    $menu_storage->create([
+      'id' => 'drupress-admin',
+      'label' => 'Drupress admin',
+      'description' => 'WordPress-style admin sidebar menu provided by Drupress.',
+      'locked' => TRUE,
+      'dependencies' => ['enforced' => ['module' => ['drupress_menu']]],
+    ])->save();
+  }
+
   $config = \Drupal::configFactory()->getEditable('navigation.block_layout');
   $sections = $config->get('sections');
   if (!is_array($sections) || !isset($sections[0]['components'])) {

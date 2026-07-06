@@ -1,0 +1,227 @@
+--- a/gutenberg.routing.yml	2026-07-06 10:45:17.319300525 -0400
++++ b/gutenberg.routing.yml	2026-07-06 10:45:17.322628003 -0400
+@@ -18,7 +18,7 @@
+   path: '/editor/media/upload/{editor}'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\MediaController::upload'
+-  methods: 'POST'
++  methods: ['POST']
+   requirements:
+     _entity_access: 'editor.use'
+     _permission: 'use gutenberg'
+@@ -31,7 +31,7 @@
+     parameters:
+       file:
+         type: entity:file
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -42,7 +42,7 @@
+     parameters:
+       file:
+         type: entity:file
+-  methods: 'POST'
++  methods: ['POST']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -51,7 +51,7 @@
+   path: '/editor/media/load-media/{media}'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\MediaController::loadMedia'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -64,7 +64,7 @@
+     # administration theme when editing or creating content' setting enabled.
+     # @see \Drupal\node\EventSubscriber\NodeAdminRouteSubscriber::alterRoutes()
+     _node_operation_route: TRUE
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -72,7 +72,7 @@
+   path: '/editor/media/render/{media}'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\MediaController::render'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -80,7 +80,7 @@
+   path: '/editor/entity/render/{entity_type}/{entity_id}/{view_mode}'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\EntityController::renderEntity'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -88,7 +88,7 @@
+   path: '/editor/entity/view_modes/{entity_type}/{bundle}'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\EntityController::viewModes'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -97,7 +97,7 @@
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\BlocksController::loadByType'
+     content_type: 'none'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -108,7 +108,7 @@
+     # parameters:
+     #   block:
+     #     type: entity:block
+-  methods: 'POST'
++  methods: ['POST']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -117,7 +117,7 @@
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\BlocksController::loadContentBlockTypes'
+     content_type: 'none'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -132,7 +132,7 @@
+   path: '/editor/content_block/clone_if_used'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\BlocksController::cloneIfUsed'
+-  methods: 'POST'
++  methods: ['POST']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -169,7 +169,7 @@
+   path: '/editor/reusable-blocks'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\ReusableBlocksController::save'
+-  methods: 'POST'
++  methods: ['POST']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -178,7 +178,7 @@
+   path: '/editor/reusable-blocks/{block_id}'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\ReusableBlocksController::save'
+-  methods: 'PUT'
++  methods: ['PUT']
+   requirements:
+     _custom_access: '\Drupal\gutenberg\Controller\ReusableBlocksController::access'
+     _format: json
+@@ -187,7 +187,7 @@
+   path: '/editor/reusable-blocks/{block_id}'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\ReusableBlocksController::delete'
+-  methods: 'DELETE'
++  methods: ['DELETE']
+   requirements:
+     _custom_access: '\Drupal\gutenberg\Controller\ReusableBlocksController::access'
+     _format: json
+@@ -196,7 +196,7 @@
+   path: '/editor/reusable-blocks'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\ReusableBlocksController::load'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -204,7 +204,7 @@
+   path: '/editor/reusable-blocks/{block_id}'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\ReusableBlocksController::load'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _custom_access: '\Drupal\gutenberg\Controller\ReusableBlocksController::access'
+     _format: json
+@@ -212,7 +212,7 @@
+   path: '/editor/patterns/categories'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\ReusableBlocksController::categoryLoad'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -223,7 +223,7 @@
+     parameters:
+       category:
+         type: entity:taxonomy_term
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _custom_access: '\Drupal\gutenberg\Controller\ReusableBlocksController::access'
+     _format: json
+@@ -231,7 +231,7 @@
+   path: '/editor/patterns/categories'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\ReusableBlocksController::categoryCreate'
+-  methods: 'POST'
++  methods: ['POST']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -241,7 +241,7 @@
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\OEmbedProxyUrlController::request'
+     _disable_route_normalizer: 'TRUE'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -249,7 +249,7 @@
+   path: '/editor/search'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\SearchController::search'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -257,7 +257,7 @@
+   path: '/editor/media/search/{type}/{search}'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\MediaController::search'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -265,7 +265,7 @@
+   path: '/editor/media/update_data/{fid}'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\MediaController::updateData'
+-  methods: 'POST'
++  methods: ['POST']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json
+@@ -274,7 +274,7 @@
+   path: '/editor/media/autocomplete'
+   defaults:
+     _controller: '\Drupal\gutenberg\Controller\MediaController::autocomplete'
+-  methods: 'GET'
++  methods: ['GET']
+   requirements:
+     _permission: 'use gutenberg'
+     _format: json

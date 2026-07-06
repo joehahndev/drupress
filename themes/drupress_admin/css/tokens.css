@@ -99,6 +99,14 @@
  * Canvas & chrome that Claro does not expose as custom properties.
  * ------------------------------------------------------------------------ */
 
+/* wp-admin is a light-only surface. Without this, browsers/OSes with a dark
+   color-scheme preference can apply automatic content-darkening (e.g.
+   Chromium's "force dark") that overrides literal color values, undoing the
+   WP palette wholesale despite every rule below being correct. */
+:root {
+  color-scheme: light;
+}
+
 /* WP canvas: light gray everywhere behind content; 13px body text.
    Claro types body at 16px directly, so the size is set here rather than
    through --font-size-base. */
