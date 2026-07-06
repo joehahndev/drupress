@@ -4,24 +4,26 @@
  * mapped onto Claro's CSS custom properties.
  *
  * WP reference values (wp-admin, default color scheme):
- *   sidebar        #1d2327
- *   sidebar hover  #2c3338
- *   canvas         #f0f0f1
- *   card/white     #ffffff
- *   accent blue    #2271b1  (hover #135e96)
- *   text           #1d2327 / #50575e (muted)
- *   borders        #c3c4c7 / #dcdcde
- *   success green  #00a32a, warning yellow #dba617, error red #d63638
+ *   sidebar #1d2327 (hover #2c3338), canvas #f0f0f1, cards #fff,
+ *   accent #2271b1 (hover #135e96, active #0a4b78), text #1d2327,
+ *   muted #50575e, borders #c3c4c7 / #dcdcde,
+ *   success #00a32a, warning #dba617, error #d63638.
  */
 
 :root {
-  /* Drupress-namespaced tokens (used by drupress components). */
+  /* --------------------------------------------------------------------
+   * Drupress-namespaced tokens, used by Drupress components and screens.
+   * -------------------------------------------------------------------- */
   --drupress-sidebar-bg: #1d2327;
   --drupress-sidebar-hover-bg: #2c3338;
+  --drupress-sidebar-submenu-bg: #2c3338;
+  --drupress-sidebar-text: #f0f0f1;
+  --drupress-sidebar-text-dim: #c3c4c7;
   --drupress-canvas-bg: #f0f0f1;
   --drupress-card-bg: #ffffff;
   --drupress-accent: #2271b1;
   --drupress-accent-hover: #135e96;
+  --drupress-accent-active: #0a4b78;
   --drupress-text: #1d2327;
   --drupress-text-muted: #50575e;
   --drupress-border: #c3c4c7;
@@ -30,6 +32,123 @@
   --drupress-warning: #dba617;
   --drupress-error: #d63638;
   --drupress-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+
+  /* --------------------------------------------------------------------
+   * Claro semantic tokens re-pointed at the WP palette.
+   * Only semantic aliases are overridden, never Claro's raw scales, so
+   * anything we miss degrades to a sane Claro default.
+   * -------------------------------------------------------------------- */
+
+  /* Accent: Claro "absolute zero" blue -> WP admin blue. */
+  --color-absolutezero: var(--drupress-accent);
+  --color-absolutezero-hover: var(--drupress-accent-hover);
+  --color-absolutezero-active: var(--drupress-accent-active);
+
+  /* Focus: Claro green -> WP blue focus ring. */
+  --color-focus: var(--drupress-accent);
+  --focus-box-shadow: 0 0 0 1px var(--drupress-accent), 0 0 2px 1px rgb(34, 113, 177, 0.8);
+
+  /* Text. */
+  --color-text: var(--drupress-text);
+  --color-text-light: var(--drupress-text-muted);
+
+  /* Errors / danger: Claro maximum red -> WP red. */
+  --color-maximumred: var(--drupress-error);
+  --color-maximumred-hover: #b32d2e;
+  --color-maximumred-active: #8a2424;
+
+  /* Typography: WP admin is 13px body text on a system font stack. */
+  --font-family: var(--drupress-font);
+  --font-size-base: 0.8125rem; /* 13px */
+  --font-size-s: 0.8125rem; /* 13px */
+  --font-size-xs: 0.75rem; /* 12px */
+  --font-size-xxs: 0.6875rem; /* 11px */
+  --font-size-h1: 1.4375rem; /* 23px – WP screen titles. */
+  --font-size-h2: 1.3125rem; /* 21px */
+  --font-size-h3: 1.25rem; /* 20px */
+  --font-size-h4: 1.125rem; /* 18px */
+  --font-size-h5: 0.875rem; /* 14px */
+  --font-size-h6: 0.8125rem; /* 13px */
+  --line-height: 1.4615; /* WP: 19px / 13px */
+
+  /* Inputs: WP uses 14px input text, #8c8f94 borders, 3px radius. */
+  --input-font-size: 0.875rem; /* 14px */
+  --input-border-color: #8c8f94;
+  --input--hover-border-color: #50575e;
+  --input--focus-border-color: var(--drupress-accent);
+  --input-border-radius-size: 3px;
+  --input-fg-color--description: var(--drupress-text-muted);
+
+  /* Buttons: WP blue primary, 3px radius. */
+  --base-border-radius: 3px;
+  --button-border-radius-size: 3px;
+  --button-bg-color--primary: var(--drupress-accent);
+  --button--hover-bg-color--primary: var(--drupress-accent-hover);
+  --button--active-bg-color--primary: var(--drupress-accent-active);
+  --button-fg-color: var(--drupress-accent);
+  --button-bg-color: #f6f7f7;
+  --button--hover-bg-color: #f0f0f1;
+  --button--active-bg-color: #dcdcde;
+
+  /* Details/cards & dialogs. */
+  --details-border-color: var(--drupress-border);
+  --jui-dialog-title-bg-color: var(--drupress-text);
 }
 
-/* M1 (in progress): re-point Claro tokens to the WP palette. */
+/* ------------------------------------------------------------------------
+ * Canvas & chrome that Claro does not expose as custom properties.
+ * ------------------------------------------------------------------------ */
+
+/* WP canvas: light gray everywhere behind content; 13px body text.
+   Claro types body at 16px directly, so the size is set here rather than
+   through --font-size-base. */
+body {
+  background: var(--drupress-canvas-bg);
+  font-family: var(--drupress-font);
+  font-size: 0.8125rem;
+}
+
+/* WP page titles are normal weight. */
+.page-title {
+  font-weight: 400;
+  color: var(--drupress-text);
+}
+
+/* WP "secondary" button look: white-ish with blue text and blue border. */
+.button:not(.button--primary):not(.button--danger) {
+  border: 1px solid var(--drupress-accent);
+  color: var(--drupress-accent);
+}
+
+.button:not(.button--primary):not(.button--danger):hover {
+  border-color: var(--drupress-accent-hover);
+  color: var(--drupress-accent-hover);
+}
+
+/* ------------------------------------------------------------------------
+ * Status messages: WP notices are white cards with a 4px colored left
+ * border and a subtle shadow.
+ * ------------------------------------------------------------------------ */
+
+.messages-list__item,
+.messages {
+  border-radius: 0;
+  border: 1px solid var(--drupress-border-light);
+  border-left-width: 4px;
+  background-color: var(--drupress-card-bg);
+  background-image: none;
+  box-shadow: 0 1px 1px rgb(0, 0, 0, 0.04);
+  color: var(--drupress-text);
+}
+
+.messages--status {
+  border-left-color: var(--drupress-success);
+}
+
+.messages--warning {
+  border-left-color: var(--drupress-warning);
+}
+
+.messages--error {
+  border-left-color: var(--drupress-error);
+}
