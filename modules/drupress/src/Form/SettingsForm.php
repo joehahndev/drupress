@@ -6,11 +6,27 @@ namespace Drupal\drupress\Form;
 
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
+use Drupal\drupress\DrupressStructureInstaller;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configures the Drupress content model mapping.
  */
 class SettingsForm extends ConfigFormBase {
+
+  /**
+   * The structure installer.
+   */
+  protected DrupressStructureInstaller $structureInstaller;
+
+  /**
+   * {@inheritdoc}
+   */
+  public static function create(ContainerInterface $container): static {
+    $instance = parent::create($container);
+    $instance->structureInstaller = $container->get('drupress.structure_installer');
+    return $instance;
+  }
 
   /**
    * {@inheritdoc}
@@ -79,7 +95,34 @@ class SettingsForm extends ConfigFormBase {
       '#description' => $this->t('Applies only while the Drupress Dashboard sub-module is enabled.'),
     ];
 
+    $form['structures'] = [
+      '#type' => 'details',
+      '#title' => $this->t('Content structures'),
+      '#open' => TRUE,
+      '#description' => $this->t('Create the mapped vocabularies and fields as site-owned configuration, for sites installed without the Drupress recipe. Only missing items are created; existing content is never touched, and everything created here survives a later Drupress uninstall.'),
+    ];
+    $form['structures']['create_structures'] = [
+      '#type' => 'submit',
+      '#value' => $this->t('Create missing structures'),
+      '#submit' => ['::createStructures'],
+      '#limit_validation_errors' => [],
+    ];
+
     return parent::buildForm($form, $form_state);
+  }
+
+  /**
+   * Submit handler: creates any missing mapped structures.
+   */
+  public function createStructures(array &$form, FormStateInterface $form_state): void {
+    $created = $this->structureInstaller->createMissing();
+    if ($created === []) {
+      $this->messenger()->addStatus($this->t('All mapped structures already exist. Nothing to create.'));
+      return;
+    }
+    foreach ($created as $message) {
+      $this->messenger()->addStatus($message);
+    }
   }
 
   /**

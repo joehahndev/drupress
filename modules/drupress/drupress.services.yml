@@ -7,6 +7,11 @@ services:
 
   Drupal\drupress\DrupressMapping: '@drupress.mapping'
 
+  drupress.structure_installer:
+    class: Drupal\drupress\DrupressStructureInstaller
+
+  Drupal\drupress\DrupressStructureInstaller: '@drupress.structure_installer'
+
   drupress.config_subscriber:
     class: Drupal\drupress\EventSubscriber\ConfigSubscriber
     arguments:

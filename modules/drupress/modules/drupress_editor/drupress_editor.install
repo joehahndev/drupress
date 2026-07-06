@@ -1,0 +1,54 @@
+<?php
+
+/**
+ * @file
+ * Install-time hooks for Drupress Editor.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Url;
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Surfaces the one documented facade compromise: content authored with the
+ * Gutenberg block editor keeps its block-comment markup
+ * (<!-- wp:paragraph --> …) inside the standard body field. Nothing is lost —
+ * the body remains valid, renderable HTML editable in CKEditor — but the
+ * markup residue is visible in the source, so we tell the site owner plainly.
+ */
+function drupress_editor_uninstall(): void {
+  \Drupal::messenger()->addWarning(t('Drupress Editor was uninstalled. Any content written with the Gutenberg block editor keeps its content intact, but the body HTML still contains Gutenberg block comments (for example <code>&lt;!-- wp:paragraph --&gt;</code>). This is harmless and the content remains fully editable; the comments are only visible when editing the raw source.'));
+}
+
+/**
+ * Implements hook_requirements().
+ */
+function drupress_editor_requirements(string $phase): array {
+  $requirements = [];
+  if ($phase !== 'runtime') {
+    return $requirements;
+  }
+
+  // Point out when the mapped post type has no Gutenberg enablement, so the
+  // "WordPress editor" promise is actually in effect.
+  /** @var \Drupal\drupress\DrupressMapping $mapping */
+  $mapping = \Drupal::service('drupress.mapping');
+  $post_type = $mapping->postType();
+  $enabled = $post_type !== NULL
+    && \Drupal::config('gutenberg.settings')->get($post_type . '_enable_full');
+
+  if (!$enabled) {
+    $requirements['drupress_editor_gutenberg'] = [
+      'title' => t('Drupress Editor'),
+      'value' => t('Gutenberg not enabled for the mapped "Posts" type'),
+      'description' => t('Enable the Gutenberg editor for your Posts content type to get the WordPress editing experience. See the <a href=":url">Drupress settings</a>.', [
+        ':url' => Url::fromRoute('drupress.settings')->toString(),
+      ]),
+      'severity' => REQUIREMENT_WARNING,
+    ];
+  }
+
+  return $requirements;
+}

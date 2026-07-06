@@ -2,11 +2,9 @@
 # the site root as cwd so Drupal core is auto-discovered:
 #   cd /var/www/html && /mnt/c/dev/drupress-drupal-module-suite/vendor/bin/phpstan \
 #     analyse -c /mnt/c/dev/drupress-drupal-module-suite/phpstan.neon
-includes:
-	- vendor/mglaman/phpstan-drupal/extension.neon
-	- vendor/mglaman/phpstan-drupal/rules.neon
-	- vendor/phpstan/phpstan-deprecation-rules/rules.neon
-
+# phpstan-drupal and the deprecation rules are auto-registered by
+# phpstan/extension-installer (a require-dev of this repo), so they are not
+# included manually here — doing both double-registers the Drupal ServiceMap.
 parameters:
 	level: 6
 	paths:

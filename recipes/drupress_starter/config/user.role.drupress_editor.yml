@@ -1,0 +1,31 @@
+langcode: en
+status: true
+dependencies:
+  module:
+    - drupress_dashboard
+    - node
+id: drupress_editor
+label: 'Editor'
+weight: 5
+is_admin: false
+permissions:
+  - 'access administration pages'
+  - 'access content overview'
+  - 'access drupress dashboard'
+  - 'access files overview'
+  - 'access media overview'
+  - 'administer url aliases'
+  - 'create article content'
+  - 'create page content'
+  - 'create media'
+  - 'create url aliases'
+  - 'delete any media'
+  - 'delete article revisions'
+  - 'edit any article content'
+  - 'edit any page content'
+  - 'edit own article content'
+  - 'edit own page content'
+  - 'update any media'
+  - 'use text format basic_html'
+  - 'view own unpublished content'
+  - 'view the administration theme'
