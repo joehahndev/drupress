@@ -41,6 +41,11 @@ config:
     node.settings:
       simpleConfigUpdate:
         use_admin_theme: true
+    # The WP block editor for Posts and Pages.
+    gutenberg.settings:
+      simpleConfigUpdate:
+        article_enable_full: true
+        page_enable_full: true
     # Put the WP model fields on the post form.
     core.entity_form_display.node.article.default:
       setComponents:
@@ -55,4 +60,4 @@ config:
             weight: 13
             region: content
 
-# M6 (pending): gutenberg per-bundle enablement actions, editor role.
+# M6 (pending): editor role with WP-appropriate permissions.

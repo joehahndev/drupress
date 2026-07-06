@@ -1,0 +1,85 @@
+<?php
+
+/**
+ * @file
+ * WordPress-style editor screen: Gutenberg sidebar integration.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Form\FormStateInterface;
+use Drupal\node\Form\NodeForm;
+
+/**
+ * Implements hook_form_BASE_FORM_ID_alter() for node_form.
+ *
+ * Runs before the Gutenberg module's alter (module-major alter ordering,
+ * 'drupress_editor' < 'gutenberg'). Gutenberg groups every field it finds at
+ * the top of the form into its "More settings" tray, but explicitly respects
+ * a pre-existing 'additional_fields' container — which it renders inside the
+ * editor sidebar's Document tab. So the WP-model fields (Categories, Tags,
+ * Featured image) are moved in here, before Gutenberg's pass sees them.
+ */
+function drupress_editor_form_node_form_alter(array &$form, FormStateInterface $form_state, string $form_id): void {
+  $form_object = $form_state->getFormObject();
+  if (!$form_object instanceof NodeForm) {
+    return;
+  }
+  $node = $form_object->getEntity();
+  // Same check Gutenberg's own alter performs. Read the config directly:
+  // this alter runs before Gutenberg's, and with lazy .module loading its
+  // helper function may not be defined yet.
+  if (!\Drupal::config('gutenberg.settings')->get($node->bundle() . '_enable_full')) {
+    return;
+  }
+
+  // Gutenberg ships admin-theme compatibility CSS keyed to Claro only;
+  // drupress_admin is a Claro subtheme, so attach it here, along with the
+  // WP-style panel CSS for the relocated sidebar fields.
+  if (\Drupal::theme()->getActiveTheme()->getName() === 'drupress_admin') {
+    $form['#attached']['library'][] = 'gutenberg/claro';
+    $form['#attached']['library'][] = 'drupress_admin/editor';
+  }
+
+  // The sidebar container Gutenberg's template renders in the Document tab.
+  // Mirrors the container Gutenberg would otherwise create itself.
+  $form['additional_fields'] = [
+    '#type' => 'container',
+    '#title' => 'Additional',
+    '#weight' => -100,
+  ];
+
+  // Fields are resolved through the mapping (never hard-coded names);
+  // anything unresolved stays in the More settings tray — graceful
+  // degradation, per the facade principle.
+  /** @var \Drupal\drupress\DrupressMapping $mapping */
+  $mapping = \Drupal::service('drupress.mapping');
+  $bundle = $node->bundle();
+
+  $sidebar_fields = array_filter([
+    $mapping->categoryField($bundle),
+    $mapping->tagField($bundle),
+    $bundle === $mapping->postType() ? $mapping->featuredImageField() : NULL,
+  ]);
+  foreach ($sidebar_fields as $field_name) {
+    if (isset($form[$field_name])) {
+      // Physically move the widget; its #parents were fixed at build time,
+      // so submission still maps to the right field values.
+      $form['additional_fields'][$field_name] = $form[$field_name];
+      $form['additional_fields'][$field_name]['#attributes']['class'][] = 'drupress-sidebar-panel';
+      // Whichever alter ran first: without this, a '#group' set by
+      // Gutenberg's pass would re-render the widget inside the More
+      // settings tray regardless of its position in the form array.
+      unset($form['additional_fields'][$field_name]['#group']);
+      unset($form[$field_name]);
+    }
+  }
+
+  // Details-type widgets (e.g. the media library widget) get listed in
+  // Gutenberg's '#fields_with_details'; its after-build registers them with
+  // the metabox JS, which would move their DOM into the tray. Keep the
+  // relocated fields out of that list.
+  if (!empty($form['#fields_with_details'])) {
+    $form['#fields_with_details'] = array_values(array_diff($form['#fields_with_details'], $sidebar_fields));
+  }
+}

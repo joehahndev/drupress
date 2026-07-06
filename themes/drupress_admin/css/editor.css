@@ -1,0 +1,42 @@
+/**
+ * @file
+ * WordPress-style polish for the Gutenberg editor screen.
+ *
+ * Gutenberg's React UI already looks like wp-admin; these rules style the
+ * Drupal field widgets that Drupress relocates into the editor sidebar
+ * (Categories, Tags, Featured image) to read like WP sidebar panels.
+ */
+
+/* Each relocated field renders as a panel: separator + breathing room. */
+.drupress-sidebar-panel {
+  padding: 12px 0;
+  border-top: 1px solid #e0e0e0;
+  margin: 0;
+}
+
+/* WP panel label look. */
+.drupress-sidebar-panel > label,
+.drupress-sidebar-panel legend,
+.drupress-sidebar-panel .form-item__label,
+.drupress-sidebar-panel .fieldset__label {
+  font-size: 0.6875rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  color: #1e1e1e;
+}
+
+.drupress-sidebar-panel .form-item__description,
+.drupress-sidebar-panel .fieldset__description {
+  font-size: 0.75rem;
+  color: var(--drupress-text-muted, #50575e);
+}
+
+/* Keep the media library "featured image" widget compact in the sidebar. */
+.drupress-sidebar-panel .media-library-widget .js-media-library-selection {
+  margin-block: 8px;
+}
+
+.drupress-sidebar-panel .media-library-open-button {
+  width: 100%;
+  justify-content: center;
+}

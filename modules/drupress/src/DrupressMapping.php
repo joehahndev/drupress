@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace Drupal\drupress;
 
 use Drupal\Core\Config\ConfigFactoryInterface;
+use Drupal\Core\Entity\EntityFieldManagerInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 
 /**
@@ -22,6 +23,7 @@ class DrupressMapping {
   public function __construct(
     protected ConfigFactoryInterface $configFactory,
     protected EntityTypeManagerInterface $entityTypeManager,
+    protected EntityFieldManagerInterface $entityFieldManager,
   ) {}
 
   /**
@@ -65,6 +67,42 @@ class DrupressMapping {
       ->getStorage('field_config')
       ->load("node.$post_type.$field");
     return $definitions !== NULL ? $field : NULL;
+  }
+
+  /**
+   * Gets the field on a bundle referencing the "Categories" vocabulary.
+   */
+  public function categoryField(string $bundle): ?string {
+    return $this->termReferenceField($bundle, $this->categoryVocabulary());
+  }
+
+  /**
+   * Gets the field on a bundle referencing the "Tags" vocabulary.
+   */
+  public function tagField(string $bundle): ?string {
+    return $this->termReferenceField($bundle, $this->tagVocabulary());
+  }
+
+  /**
+   * Finds the first term reference field on a bundle targeting a vocabulary.
+   */
+  protected function termReferenceField(string $bundle, ?string $vocabulary): ?string {
+    if ($vocabulary === NULL || !$this->entityTypeManager->hasDefinition('node')) {
+      return NULL;
+    }
+    foreach ($this->entityFieldManager->getFieldDefinitions('node', $bundle) as $name => $definition) {
+      if ($definition->getType() !== 'entity_reference' || $definition->getFieldStorageDefinition()->isBaseField()) {
+        continue;
+      }
+      if ($definition->getSetting('target_type') !== 'taxonomy_term') {
+        continue;
+      }
+      $handler_settings = $definition->getSetting('handler_settings') ?? [];
+      if (in_array($vocabulary, $handler_settings['target_bundles'] ?? [], TRUE)) {
+        return $name;
+      }
+    }
+    return NULL;
   }
 
   /**

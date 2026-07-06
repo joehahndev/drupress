@@ -19,3 +19,8 @@ media:
   css:
     theme:
       css/media.css: {}
+
+editor:
+  css:
+    theme:
+      css/editor.css: {}
