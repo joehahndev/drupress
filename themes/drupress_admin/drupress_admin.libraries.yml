@@ -24,3 +24,8 @@ editor:
   css:
     theme:
       css/editor.css: {}
+
+dashboard:
+  css:
+    theme:
+      css/dashboard.css: {}

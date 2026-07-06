@@ -5,3 +5,5 @@ package: Drupress
 core_version_requirement: ^11.1
 dependencies:
   - drupress:drupress
+  - drupal:filter
+  - drupal:node

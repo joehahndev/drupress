@@ -1,0 +1,49 @@
+<?php
+
+/**
+ * @file
+ * WordPress-style dashboard.
+ */
+
+declare(strict_types=1);
+
+use Drupal\user\UserInterface;
+
+/**
+ * Implements hook_theme().
+ */
+function drupress_dashboard_theme(array $existing, string $type, string $theme, string $path): array {
+  return [
+    'drupress_dashboard' => [
+      'variables' => ['widgets' => []],
+    ],
+    'drupress_dashboard_widget' => [
+      'variables' => ['title' => NULL, 'content' => []],
+    ],
+  ];
+}
+
+/**
+ * Implements hook_user_login().
+ *
+ * WordPress lands users on the dashboard after login; do the same when the
+ * setting is on, the user may see it, and no explicit destination was asked.
+ */
+function drupress_dashboard_user_login(UserInterface $account): void {
+  if (PHP_SAPI === 'cli') {
+    return;
+  }
+  /** @var \Drupal\drupress\DrupressMapping $mapping */
+  $mapping = \Drupal::service('drupress.mapping');
+  if (!$mapping->loginRedirectEnabled() || !$account->hasPermission('access drupress dashboard')) {
+    return;
+  }
+  $request = \Drupal::request();
+  $destination = $request->query->get('destination');
+  // Respect any explicit destination (one-time login links, password reset
+  // flows, ?destination= deep links). Only claim the default landing.
+  if (is_string($destination) && $destination !== '') {
+    return;
+  }
+  $request->query->set('destination', '/admin/dashboard');
+}

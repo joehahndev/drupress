@@ -1,0 +1,3 @@
+access drupress dashboard:
+  title: 'Access the Drupress dashboard'
+  description: 'View the WordPress-style dashboard at /admin/dashboard.'

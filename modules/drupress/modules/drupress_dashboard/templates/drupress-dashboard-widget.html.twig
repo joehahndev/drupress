@@ -1,0 +1,18 @@
+{#
+/**
+ * @file
+ * One dashboard widget, styled like a wp-admin postbox.
+ *
+ * Available variables:
+ * - title: the widget heading.
+ * - content: the widget body render array.
+ */
+#}
+<section class="drupress-postbox">
+  {% if title %}
+    <h2 class="drupress-postbox__title">{{ title }}</h2>
+  {% endif %}
+  <div class="drupress-postbox__content">
+    {{ content }}
+  </div>
+</section>

@@ -1,0 +1,99 @@
+/**
+ * @file
+ * WordPress-style dashboard: postbox cards in a responsive grid.
+ */
+
+.drupress-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.drupress-postbox {
+  background: var(--drupress-card-bg);
+  border: 1px solid var(--drupress-border);
+  box-shadow: 0 1px 1px rgb(0, 0, 0, 0.04);
+}
+
+.drupress-postbox__title {
+  margin: 0;
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--drupress-border-light);
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--drupress-text);
+  line-height: 1.4;
+}
+
+.drupress-postbox__content {
+  padding: 12px;
+  font-size: 0.8125rem;
+}
+
+/* At a Glance list. */
+.drupress-glance-list {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drupress-glance-list li {
+  list-style: none;
+  margin: 0;
+}
+
+.drupress-glance-list a {
+  text-decoration: none;
+  color: var(--drupress-accent);
+}
+
+.drupress-glance-drafts {
+  margin: 10px 0 0;
+  padding-top: 8px;
+  border-top: 1px solid var(--drupress-border-light);
+  color: var(--drupress-text-muted);
+}
+
+/* Activity list. */
+.drupress-activity-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drupress-activity-list li {
+  list-style: none;
+  margin: 0 0 8px;
+}
+
+.drupress-activity-list a {
+  display: block;
+  text-decoration: none;
+  color: var(--drupress-accent);
+  font-weight: 600;
+}
+
+.drupress-activity-meta {
+  color: var(--drupress-text-muted);
+  font-size: 0.75rem;
+}
+
+/* Quick Draft. */
+.drupress-postbox .form-item {
+  margin-block: 0 10px;
+}
+
+.drupress-recent-drafts {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drupress-recent-drafts li {
+  list-style: none;
+  margin: 0 0 4px;
+}
