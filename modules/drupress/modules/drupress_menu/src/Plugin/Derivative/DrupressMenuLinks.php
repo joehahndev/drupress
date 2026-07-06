@@ -103,9 +103,15 @@ final class DrupressMenuLinks extends DeriverBase implements ContainerDeriverInt
 
     // Media.
     if ($this->moduleHandler->moduleExists('media')) {
-      $media_route = $this->routeExists('view.drupress_media.page_1')
-        ? 'view.drupress_media.page_1'
-        : 'entity.media.collection';
+      // Prefer the core Media Library grid page (WP-like), fall back to the
+      // media table overview.
+      $media_route = 'entity.media.collection';
+      foreach (['view.drupress_media.page_1', 'view.media_library.page'] as $candidate) {
+        if ($this->routeExists($candidate)) {
+          $media_route = $candidate;
+          break;
+        }
+      }
       $links['media'] = [
         'title' => 'Media',
         'route_name' => $media_route,

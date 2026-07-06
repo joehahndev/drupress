@@ -1,0 +1,11 @@
+views.filter.drupress_mapped_bundle:
+  type: views_filter
+  label: 'Drupress mapped bundle'
+  mapping:
+    drupress_mapping_key:
+      type: string
+      label: 'Which WP mapping to filter by (post or page)'
+
+views.field.drupress_row_actions:
+  type: views_field
+  label: 'Drupress row actions'

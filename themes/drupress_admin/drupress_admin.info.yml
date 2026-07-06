@@ -7,6 +7,8 @@ base theme: claro
 
 libraries:
   - drupress_admin/tokens
+  - drupress_admin/list-tables
+  - drupress_admin/media
 
 libraries-extend:
   navigation/internal.navigation:

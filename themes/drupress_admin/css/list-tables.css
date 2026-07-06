@@ -1,0 +1,107 @@
+/**
+ * @file
+ * WordPress-style list tables (All Posts, All Pages, Media, Content).
+ */
+
+/* The table card. */
+.drupress-route .views-table {
+  border: 1px solid var(--drupress-border);
+  background: var(--drupress-card-bg);
+  box-shadow: 0 1px 1px rgb(0, 0, 0, 0.04);
+}
+
+.drupress-route .views-table th {
+  color: var(--drupress-text);
+  font-weight: 400;
+}
+
+.drupress-route .views-table th a {
+  color: var(--drupress-text);
+}
+
+.drupress-route .views-table tbody tr:hover {
+  background-color: #f6f7f7;
+}
+
+/* Title cell: bold WP-blue row title. */
+.drupress-route .views-table td .drupress-row-title,
+.drupress-route .views-table td a[hreflang],
+.drupress-route .views-field-title a {
+  font-weight: 600;
+  color: var(--drupress-accent);
+  text-decoration: none;
+}
+
+.drupress-route .views-field-title a:hover {
+  color: var(--drupress-accent-hover);
+}
+
+/* ------------------------------------------------------------------------
+ * Row actions: Edit | Trash | View — revealed on row hover, like wp-admin.
+ * ------------------------------------------------------------------------ */
+
+.drupress-row-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0;
+  margin: 2px 0 0;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+}
+
+.drupress-row-actions li {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drupress-row-actions li::marker {
+  content: none;
+}
+
+/* Separator pipes between actions. */
+.drupress-row-actions li + li::before {
+  content: "|";
+  margin: 0 6px;
+  color: var(--drupress-border);
+}
+
+.drupress-row-action {
+  text-decoration: none;
+  color: var(--drupress-accent);
+  font-weight: 400;
+}
+
+.drupress-row-action:hover {
+  color: var(--drupress-accent-hover);
+}
+
+.drupress-row-action--trash,
+.drupress-row-action--delete {
+  color: #b32d2e;
+}
+
+.drupress-row-action--trash:hover,
+.drupress-row-action--delete:hover {
+  color: var(--drupress-error);
+}
+
+/* Hidden until the row is hovered or focused (always shown on touch). */
+@media (hover: hover) {
+  .drupress-route .views-table tbody tr .drupress-row-actions {
+    visibility: hidden;
+  }
+
+  .drupress-route .views-table tbody tr:hover .drupress-row-actions,
+  .drupress-route .views-table tbody tr:focus-within .drupress-row-actions {
+    visibility: visible;
+  }
+}
+
+/* Exposed filters bar: white card like WP's tablenav. */
+.drupress-route .views-exposed-form {
+  background: var(--drupress-card-bg);
+  border: 1px solid var(--drupress-border-light);
+  box-shadow: 0 1px 1px rgb(0, 0, 0, 0.04);
+}

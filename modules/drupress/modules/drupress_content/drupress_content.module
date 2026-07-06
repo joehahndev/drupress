@@ -1,0 +1,29 @@
+<?php
+
+/**
+ * @file
+ * Hooks for Drupress Content list tables.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_views_data_alter().
+ */
+function drupress_content_views_data_alter(array &$data): void {
+  $data['node_field_data']['drupress_mapped_bundle'] = [
+    'title' => t('Drupress mapped bundle'),
+    'help' => t('Filters to the node type mapped as WordPress Posts or Pages in the Drupress settings.'),
+    'filter' => [
+      'id' => 'drupress_mapped_bundle',
+      'field' => 'type',
+    ],
+  ];
+  $data['node_field_data']['drupress_row_actions'] = [
+    'title' => t('Drupress row actions'),
+    'help' => t('WordPress-style row actions: Edit, Trash/Restore, View.'),
+    'field' => [
+      'id' => 'drupress_row_actions',
+    ],
+  ];
+}

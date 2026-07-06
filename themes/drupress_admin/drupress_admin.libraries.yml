@@ -1,9 +1,21 @@
 tokens:
   css:
-    base:
+    # Theme category: must cascade after Claro's component styles so the
+    # WP component overrides (messages, buttons, titles) win.
+    theme:
       css/tokens.css: {}
 
 navigation:
   css:
     theme:
       css/navigation.css: {}
+
+list-tables:
+  css:
+    theme:
+      css/list-tables.css: {}
+
+media:
+  css:
+    theme:
+      css/media.css: {}

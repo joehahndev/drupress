@@ -1,0 +1,29 @@
+drupress_content.trash:
+  path: '/admin/drupress/trash/{node}'
+  defaults:
+    _controller: 'Drupal\drupress_content\Controller\TrashController::trash'
+    _title: 'Move to Trash'
+  requirements:
+    _entity_access: 'node.update'
+    _csrf_token: 'TRUE'
+    node: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: entity:node
+
+drupress_content.restore:
+  path: '/admin/drupress/restore/{node}'
+  defaults:
+    _controller: 'Drupal\drupress_content\Controller\TrashController::restore'
+    _title: 'Restore'
+  requirements:
+    _entity_access: 'node.update'
+    _csrf_token: 'TRUE'
+    node: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: entity:node

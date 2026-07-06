@@ -1,0 +1,24 @@
+/**
+ * @file
+ * WordPress-style Media Library grid styling for the core media library view.
+ */
+
+.media-library-view .media-library-views-form__rows {
+  gap: 16px;
+}
+
+.media-library-item--grid {
+  background: var(--drupress-card-bg);
+  border: 1px solid var(--drupress-border-light);
+  box-shadow: 0 1px 1px rgb(0, 0, 0, 0.04);
+  transition: box-shadow 0.1s ease-in-out;
+}
+
+.media-library-item--grid:hover {
+  box-shadow: 0 2px 6px rgb(0, 0, 0, 0.15);
+}
+
+.media-library-item--grid .media-library-item__name {
+  font-size: 0.75rem;
+  color: var(--drupress-text-muted);
+}
