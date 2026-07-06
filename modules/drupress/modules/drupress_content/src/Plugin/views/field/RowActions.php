@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Drupal\drupress_content\Plugin\views\field;
 
+use Drupal\Component\Serialization\Json;
 use Drupal\Core\Plugin\ContainerFactoryPluginInterface;
 use Drupal\Core\Routing\RedirectDestinationInterface;
 use Drupal\Core\Url;
@@ -14,7 +15,7 @@ use Drupal\views\ResultRow;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
- * WordPress-style row actions: Edit | Trash/Restore | View.
+ * WordPress-style row actions: Edit | Quick Edit | Trash/Restore | View.
  *
  * Rendered under the title cell and revealed on row hover by the
  * drupress_admin theme, like the wp-admin list tables. "Trash" is honestly
@@ -76,6 +77,16 @@ final class RowActions extends FieldPluginBase implements ContainerFactoryPlugin
         'title' => $this->t('Edit'),
         'url' => $node->toUrl('edit-form', $destination),
       ];
+      $links['quick-edit'] = [
+        'title' => $this->t('Quick Edit'),
+        'url' => Url::fromRoute('drupress_content.quick_edit', ['node' => $node->id()], $destination + [
+          'attributes' => [
+            'class' => ['use-ajax'],
+            'data-dialog-type' => 'modal',
+            'data-dialog-options' => Json::encode(['width' => 500]),
+          ],
+        ]),
+      ];
       $links[$node->isPublished() ? 'trash' : 'restore'] = [
         'title' => $node->isPublished() ? $this->t('Trash') : $this->t('Restore'),
         'url' => Url::fromRoute(
@@ -116,6 +127,7 @@ final class RowActions extends FieldPluginBase implements ContainerFactoryPlugin
       '#theme' => 'item_list',
       '#items' => $items,
       '#attributes' => ['class' => ['drupress-row-actions']],
+      '#attached' => ['library' => ['core/drupal.dialog.ajax']],
       '#cache' => ['contexts' => ['user.permissions']],
     ];
   }

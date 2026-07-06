@@ -27,3 +27,17 @@ drupress_content.restore:
     parameters:
       node:
         type: entity:node
+
+drupress_content.quick_edit:
+  path: '/admin/drupress/quick-edit/{node}'
+  defaults:
+    _form: 'Drupal\drupress_content\Form\QuickEditForm'
+    _title: 'Quick Edit'
+  requirements:
+    _entity_access: 'node.update'
+    node: \d+
+  options:
+    _admin_route: TRUE
+    parameters:
+      node:
+        type: entity:node
