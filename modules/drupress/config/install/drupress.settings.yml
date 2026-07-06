@@ -1,0 +1,6 @@
+post_node_type: article
+page_node_type: page
+category_vocabulary: category
+tag_vocabulary: tags
+featured_image_field: field_featured_image
+login_redirect_dashboard: true

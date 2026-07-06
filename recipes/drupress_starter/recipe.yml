@@ -1,0 +1,36 @@
+name: 'Drupress Starter'
+description: 'Sets up the WordPress-style admin experience: Drupress modules, admin theme, and Gutenberg editor.'
+type: 'Site'
+
+install:
+  # Core prerequisites.
+  - node
+  - taxonomy
+  - media
+  - media_library
+  - path
+  - navigation
+  - menu_ui
+  # Contrib.
+  - gutenberg
+  # Drupress suite.
+  - drupress
+  - drupress_menu
+  - drupress_dashboard
+  - drupress_content
+  - drupress_media
+  - drupress_editor
+  # Theme (recipes install themes from the same list).
+  - drupress_admin
+
+config:
+  actions:
+    system.theme:
+      simpleConfigUpdate:
+        admin: drupress_admin
+    node.settings:
+      simpleConfigUpdate:
+        use_admin_theme: true
+
+# M6 (pending): site-owned content model config (vocabularies, featured image
+# field, form/view displays) and gutenberg per-bundle enablement actions.

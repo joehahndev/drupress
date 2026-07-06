@@ -1,0 +1,4 @@
+administer drupress:
+  title: 'Administer Drupress'
+  description: 'Configure the Drupress content model mapping and behavior.'
+  restrict access: true

@@ -1,0 +1,5 @@
+drupress.settings:
+  title: 'Drupress'
+  description: 'Configure the WordPress-style admin experience.'
+  route_name: drupress.settings
+  parent: system.admin_config_ui

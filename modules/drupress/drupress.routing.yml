@@ -1,0 +1,9 @@
+drupress.settings:
+  path: '/admin/config/drupress'
+  defaults:
+    _form: 'Drupal\drupress\Form\SettingsForm'
+    _title: 'Drupress settings'
+  requirements:
+    _permission: 'administer drupress'
+  options:
+    _admin_route: TRUE

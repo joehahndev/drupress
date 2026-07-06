@@ -1,0 +1,11 @@
+{
+    "name": "drupress/drupress_starter",
+    "description": "Drupal recipe that sets up the full Drupress WordPress-style admin experience: modules, admin theme, content model mapping, and Gutenberg.",
+    "type": "drupal-recipe",
+    "license": "GPL-2.0-or-later",
+    "require": {
+        "drupress/drupress": "*",
+        "drupress/drupress_admin": "*",
+        "drupal/gutenberg": "^3.0"
+    }
+}

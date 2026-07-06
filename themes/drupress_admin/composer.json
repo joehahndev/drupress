@@ -1,0 +1,11 @@
+{
+    "name": "drupress/drupress_admin",
+    "description": "WordPress-look admin theme for Drupal, part of the Drupress suite. Subtheme of Claro.",
+    "type": "drupal-theme",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/drupress_admin",
+    "require": {
+        "php": ">=8.3",
+        "drupal/core": "^11.1"
+    }
+}

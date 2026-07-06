@@ -1,0 +1,8 @@
+services:
+  _defaults:
+    autowire: true
+
+  drupress.mapping:
+    class: Drupal\drupress\DrupressMapping
+
+  Drupal\drupress\DrupressMapping: '@drupress.mapping'

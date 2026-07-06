@@ -1,0 +1,9 @@
+name: Drupress
+type: module
+description: 'WordPress-style admin experience for Drupal. Provides the content-model mapping and shared services used by the Drupress sub-modules.'
+package: Drupress
+core_version_requirement: ^11.1
+configure: drupress.settings
+dependencies:
+  - drupal:system
+  - drupal:node

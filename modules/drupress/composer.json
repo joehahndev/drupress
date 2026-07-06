@@ -1,0 +1,14 @@
+{
+    "name": "drupress/drupress",
+    "description": "Makes the Drupal admin and content editing experience look and feel like vanilla WordPress.",
+    "type": "drupal-module",
+    "license": "GPL-2.0-or-later",
+    "homepage": "https://www.drupal.org/project/drupress",
+    "require": {
+        "php": ">=8.3",
+        "drupal/core": "^11.1"
+    },
+    "suggest": {
+        "drupal/gutenberg": "Required by the drupress_editor sub-module for the WordPress block editor experience."
+    }
+}

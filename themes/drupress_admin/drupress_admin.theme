@@ -1,0 +1,21 @@
+<?php
+
+/**
+ * @file
+ * Preprocess and theme hooks for the Drupress Admin theme.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_preprocess_HOOK() for html.
+ */
+function drupress_admin_preprocess_html(array &$variables): void {
+  // Scope Drupress screen-specific CSS with body classes derived from the
+  // current route (e.g. drupress-route-drupress-dashboard-dashboard).
+  $route_name = \Drupal::routeMatch()->getRouteName();
+  if ($route_name !== NULL && (str_starts_with($route_name, 'drupress') || str_starts_with($route_name, 'view.drupress'))) {
+    $variables['attributes']['class'][] = 'drupress-route';
+    $variables['attributes']['class'][] = 'drupress-route-' . str_replace(['.', '_'], '-', $route_name);
+  }
+}

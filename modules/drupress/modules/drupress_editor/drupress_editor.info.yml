@@ -1,0 +1,11 @@
+name: 'Drupress Editor'
+type: module
+description: 'WordPress-style content editor screen built on the Gutenberg block editor: title, permalink, block canvas, and the Publish sidebar.'
+package: Drupress
+core_version_requirement: ^11.1
+dependencies:
+  - drupress:drupress
+  - gutenberg:gutenberg
+  - drupal:media_library
+  - drupal:path
+  - drupal:taxonomy

@@ -1,0 +1,20 @@
+<?php
+
+/**
+ * @file
+ * Shared hooks for the Drupress suite.
+ */
+
+declare(strict_types=1);
+
+use Drupal\Core\Routing\RouteMatchInterface;
+
+/**
+ * Implements hook_help().
+ */
+function drupress_help(string $route_name, RouteMatchInterface $route_match): ?string {
+  return match ($route_name) {
+    'help.page.drupress' => '<p>' . t('Drupress makes the Drupal administration and content editing experience look and feel like vanilla WordPress. It is a presentation layer: disabling or uninstalling Drupress modules never affects your content or fields. Configure the content model mapping at <a href=":url">Drupress settings</a>.', [':url' => '/admin/config/drupress']) . '</p>',
+    default => NULL,
+  };
+}

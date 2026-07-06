@@ -1,0 +1,7 @@
+name: 'Drupress Dashboard'
+type: module
+description: 'WordPress-style dashboard: At a Glance, Activity, and Quick Draft.'
+package: Drupress
+core_version_requirement: ^11.1
+dependencies:
+  - drupress:drupress

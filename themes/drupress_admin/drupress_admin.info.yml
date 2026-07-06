@@ -1,0 +1,13 @@
+name: 'Drupress Admin'
+type: theme
+description: 'WordPress-look administration theme. Part of the Drupress suite.'
+package: Drupress
+core_version_requirement: ^11.1
+base theme: claro
+
+libraries:
+  - drupress_admin/tokens
+
+libraries-extend:
+  core/drupal.navigation:
+    - drupress_admin/navigation

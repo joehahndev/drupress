@@ -1,0 +1,9 @@
+tokens:
+  css:
+    base:
+      css/tokens.css: {}
+
+navigation:
+  css:
+    theme:
+      css/navigation.css: {}

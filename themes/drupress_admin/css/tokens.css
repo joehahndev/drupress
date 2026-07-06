@@ -1,0 +1,35 @@
+/**
+ * @file
+ * Drupress design tokens: the WordPress admin palette and typography,
+ * mapped onto Claro's CSS custom properties.
+ *
+ * WP reference values (wp-admin, default color scheme):
+ *   sidebar        #1d2327
+ *   sidebar hover  #2c3338
+ *   canvas         #f0f0f1
+ *   card/white     #ffffff
+ *   accent blue    #2271b1  (hover #135e96)
+ *   text           #1d2327 / #50575e (muted)
+ *   borders        #c3c4c7 / #dcdcde
+ *   success green  #00a32a, warning yellow #dba617, error red #d63638
+ */
+
+:root {
+  /* Drupress-namespaced tokens (used by drupress components). */
+  --drupress-sidebar-bg: #1d2327;
+  --drupress-sidebar-hover-bg: #2c3338;
+  --drupress-canvas-bg: #f0f0f1;
+  --drupress-card-bg: #ffffff;
+  --drupress-accent: #2271b1;
+  --drupress-accent-hover: #135e96;
+  --drupress-text: #1d2327;
+  --drupress-text-muted: #50575e;
+  --drupress-border: #c3c4c7;
+  --drupress-border-light: #dcdcde;
+  --drupress-success: #00a32a;
+  --drupress-warning: #dba617;
+  --drupress-error: #d63638;
+  --drupress-font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+}
+
+/* M1 (in progress): re-point Claro tokens to the WP palette. */

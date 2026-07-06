@@ -1,0 +1,9 @@
+name: 'Drupress Content'
+type: module
+description: 'WordPress-style list tables for Posts and Pages, with row actions, status tabs, and bulk operations.'
+package: Drupress
+core_version_requirement: ^11.1
+dependencies:
+  - drupress:drupress
+  - drupal:node
+  - drupal:views

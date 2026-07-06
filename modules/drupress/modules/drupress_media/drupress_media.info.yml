@@ -1,0 +1,10 @@
+name: 'Drupress Media'
+type: module
+description: 'WordPress-style Media Library grid.'
+package: Drupress
+core_version_requirement: ^11.1
+dependencies:
+  - drupress:drupress
+  - drupal:media
+  - drupal:media_library
+  - drupal:views

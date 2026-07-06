@@ -1,0 +1,9 @@
+name: 'Drupress Menu'
+type: module
+description: 'The WordPress-style admin sidebar menu: Dashboard, Posts, Media, Pages, Comments, Appearance, Plugins, Users, Tools, Settings — mapped onto Drupal admin routes.'
+package: Drupress
+core_version_requirement: ^11.1
+dependencies:
+  - drupress:drupress
+  - drupal:navigation
+  - drupal:menu_ui

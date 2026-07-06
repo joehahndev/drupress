@@ -1,0 +1,17 @@
+# Run from inside the DDEV web container of the dev site (~/drupress-dev), with
+# the site root as cwd so Drupal core is auto-discovered:
+#   cd /var/www/html && /mnt/c/dev/drupress-drupal-module-suite/vendor/bin/phpstan \
+#     analyse -c /mnt/c/dev/drupress-drupal-module-suite/phpstan.neon
+includes:
+	- vendor/mglaman/phpstan-drupal/extension.neon
+	- vendor/mglaman/phpstan-drupal/rules.neon
+	- vendor/phpstan/phpstan-deprecation-rules/rules.neon
+
+parameters:
+	level: 6
+	paths:
+		- /mnt/c/dev/drupress-drupal-module-suite/modules
+		- /mnt/c/dev/drupress-drupal-module-suite/themes
+	ignoreErrors:
+		# Drupal hooks and Form API conventionally use untyped arrays.
+		- identifier: missingType.iterableValue
