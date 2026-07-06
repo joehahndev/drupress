@@ -6,3 +6,11 @@ services:
     class: Drupal\drupress\DrupressMapping
 
   Drupal\drupress\DrupressMapping: '@drupress.mapping'
+
+  drupress.config_subscriber:
+    class: Drupal\drupress\EventSubscriber\ConfigSubscriber
+    arguments:
+      - '@plugin.manager.menu.link'
+      - '@cache_tags.invalidator'
+    tags:
+      - { name: event_subscriber }

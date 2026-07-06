@@ -1,0 +1,7 @@
+langcode: en
+status: true
+dependencies: {  }
+name: Categories
+vid: category
+description: 'Post categories, WordPress-style.'
+weight: 0

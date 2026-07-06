@@ -9,5 +9,5 @@ libraries:
   - drupress_admin/tokens
 
 libraries-extend:
-  core/drupal.navigation:
+  navigation/internal.navigation:
     - drupress_admin/navigation

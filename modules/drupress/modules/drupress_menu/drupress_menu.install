@@ -1,0 +1,70 @@
+<?php
+
+/**
+ * @file
+ * Install and uninstall hooks for Drupress Menu.
+ */
+
+declare(strict_types=1);
+
+/**
+ * Implements hook_install().
+ *
+ * Swaps the Drupress admin menu into core Navigation's sidebar layout.
+ *
+ * This is the one documented case where Drupress modifies configuration it
+ * does not own (navigation.block_layout). The previous layout is backed up
+ * to state and restored on uninstall, keeping the change fully reversible.
+ */
+function drupress_menu_install(): void {
+  $config = \Drupal::configFactory()->getEditable('navigation.block_layout');
+  $sections = $config->get('sections');
+  if (!is_array($sections) || !isset($sections[0]['components'])) {
+    return;
+  }
+
+  \Drupal::state()->set('drupress_menu.navigation_layout_backup', $sections);
+
+  // Replace the content-region blocks (shortcuts, content menu, admin menu)
+  // with the single Drupress admin menu, WordPress-style. Footer blocks
+  // (user, help) are kept.
+  $components = array_filter(
+    $sections[0]['components'],
+    static fn (array $component): bool => ($component['region'] ?? '') !== 'content'
+  );
+
+  $uuid = \Drupal::service('uuid')->generate();
+  $components[$uuid] = [
+    'uuid' => $uuid,
+    'region' => 'content',
+    'configuration' => [
+      'id' => 'navigation_menu:drupress-admin',
+      'label' => 'Drupress admin',
+      'label_display' => '0',
+      'provider' => 'navigation',
+      'level' => 1,
+      'depth' => 2,
+    ],
+    'weight' => 0,
+    'additional' => [],
+  ];
+
+  $sections[0]['components'] = $components;
+  $config->set('sections', $sections)->save();
+}
+
+/**
+ * Implements hook_uninstall().
+ *
+ * Restores the Navigation sidebar layout captured at install time.
+ */
+function drupress_menu_uninstall(): void {
+  $state = \Drupal::state();
+  $backup = $state->get('drupress_menu.navigation_layout_backup');
+  if (is_array($backup)) {
+    \Drupal::configFactory()->getEditable('navigation.block_layout')
+      ->set('sections', $backup)
+      ->save();
+  }
+  $state->delete('drupress_menu.navigation_layout_backup');
+}

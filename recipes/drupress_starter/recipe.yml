@@ -2,6 +2,16 @@ name: 'Drupress Starter'
 description: 'Sets up the WordPress-style admin experience: Drupress modules, admin theme, and Gutenberg editor.'
 type: 'Site'
 
+recipes:
+  # The WordPress content model, from core building blocks (site-owned config
+  # that survives any Drupress uninstall, per the facade principle):
+  # Posts = article, Pages = page, Tags = tags vocabulary, Comments on posts.
+  - core/recipes/article_content_type
+  - core/recipes/page_content_type
+  - core/recipes/article_tags
+  - core/recipes/article_comment
+  - core/recipes/image_media_type
+
 install:
   # Core prerequisites.
   - node
@@ -31,6 +41,18 @@ config:
     node.settings:
       simpleConfigUpdate:
         use_admin_theme: true
+    # Put the WP model fields on the post form.
+    core.entity_form_display.node.article.default:
+      setComponents:
+        - name: field_category
+          options:
+            type: entity_reference_autocomplete
+            weight: 12
+            region: content
+        - name: field_featured_image
+          options:
+            type: media_library_widget
+            weight: 13
+            region: content
 
-# M6 (pending): site-owned content model config (vocabularies, featured image
-# field, form/view displays) and gutenberg per-bundle enablement actions.
+# M6 (pending): gutenberg per-bundle enablement actions, editor role.

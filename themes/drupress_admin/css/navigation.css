@@ -1,7 +1,65 @@
 /**
  * @file
- * Restyles Drupal core's Navigation sidebar as the wp-admin left rail.
+ * Restyles Drupal core's Navigation sidebar and top bar as the wp-admin
+ * dark chrome.
  *
- * M2 (pending): dark rail #1d2327, hover #2c3338, white text,
- * current-item highlight #2271b1.
+ * Core Navigation resolves every color through --admin-toolbar-color-*
+ * variables, each of which honors a --drupal-admin-color-* override hook.
+ * Re-pointing those hooks — scoped to the toolbar and top bar only — flips
+ * the chrome to the WP dark palette without touching any markup:
+ * light backgrounds become the #1d2327 rail, dark text becomes light.
  */
+
+.admin-toolbar,
+.top-bar {
+  /* Backgrounds: everything "white" inside the rail is WP dark. */
+  --drupal-admin-color-white: #1d2327;
+
+  /* Grays, inverted: high numbers are used as text, low ones as surfaces. */
+  --drupal-admin-color-gray-990: #f0f0f1;
+  --drupal-admin-color-gray-950: #f0f0f1;
+  --drupal-admin-color-gray-900: #dcdcde;
+  --drupal-admin-color-gray-800: #c3c4c7;
+  --drupal-admin-color-gray-700: #a7aaad;
+  --drupal-admin-color-gray-600: #a7aaad;
+  --drupal-admin-color-gray-500: #8c8f94;
+  --drupal-admin-color-gray-400: #646970;
+  --drupal-admin-color-gray-300: #50575e;
+  --drupal-admin-color-gray-200: #3c434a;
+  --drupal-admin-color-gray-100: #2c3338;
+  --drupal-admin-color-gray-070: #2c3338;
+  --drupal-admin-color-gray-050: #2c3338;
+  --drupal-admin-color-gray-020: #23282d;
+
+  /* Blues: hover/current text on the dark rail is WP highlight blue. */
+  --drupal-admin-color-blue-700: #72aee6;
+  --drupal-admin-color-blue-650: #72aee6;
+  --drupal-admin-color-blue-600: #2271b1;
+  --drupal-admin-color-blue-500: #2271b1;
+  --drupal-admin-color-blue-450: #2271b1;
+
+  /* Focus ring: WP light blue instead of Drupal green. */
+  --drupal-admin-color-focus: #72aee6;
+}
+
+/* WP current item: solid accent background with white text. */
+.admin-toolbar .toolbar-menu__item--level-1 > .toolbar-button.current,
+.admin-toolbar .toolbar-menu__item--level-1 > .toolbar-button[aria-expanded="true"] {
+  background-color: #2271b1;
+  color: #fff;
+}
+
+/* Submenu links: dimmer text, WP-style, brightening on hover. */
+.admin-toolbar .toolbar-menu--level-2 .toolbar-button {
+  color: #c3c4c7;
+}
+
+.admin-toolbar .toolbar-menu--level-2 .toolbar-button:hover,
+.admin-toolbar .toolbar-menu--level-2 .toolbar-button.current {
+  color: #72aee6;
+}
+
+/* Rail edge: WP has no light border against the canvas. */
+.admin-toolbar {
+  border-inline-end: none;
+}
