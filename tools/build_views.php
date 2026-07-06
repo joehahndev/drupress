@@ -113,7 +113,21 @@ $build = static function (array $view, string $kind) use ($out_dir): void {
     'exposed' => FALSE,
     'drupress_mapping_key' => $kind,
   ];
+  // WordPress calls the unpublished state "Draft"; the status tabs (below)
+  // replace core's dropdown as the primary UI, but the grouped filter itself
+  // still drives `?status=` filtering, so its group titles are kept in sync.
+  $filters['status']['group_info']['group_items'][2]['title'] = 'Draft';
   $options['filters'] = $filters;
+
+  // --- Header: WP-style All | Published | Draft status tabs. --------------
+  $options['header']['drupress_status_tabs'] = [
+    'id' => 'drupress_status_tabs',
+    'table' => 'node_field_data',
+    'field' => 'drupress_status_tabs',
+    'plugin_id' => 'drupress_status_tabs',
+    'empty' => TRUE,
+    'drupress_mapping_key' => $kind,
+  ];
 
   // --- Style: merge row actions into the Title column ----------------------
   $options['style']['options']['columns']['drupress_row_actions'] = 'title';

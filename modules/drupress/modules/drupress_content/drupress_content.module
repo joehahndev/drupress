@@ -26,4 +26,22 @@ function drupress_content_views_data_alter(array &$data): void {
       'id' => 'drupress_row_actions',
     ],
   ];
+  $data['node_field_data']['drupress_status_tabs'] = [
+    'title' => t('Drupress status tabs'),
+    'help' => t('WordPress-style All / Published / Draft tab links with counts.'),
+    'area' => [
+      'id' => 'drupress_status_tabs',
+    ],
+  ];
+}
+
+/**
+ * Implements hook_theme().
+ */
+function drupress_content_theme(array $existing, string $type, string $theme, string $path): array {
+  return [
+    'drupress_status_tabs' => [
+      'variables' => ['tabs' => []],
+    ],
+  ];
 }

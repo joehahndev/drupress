@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * WordPress-style "All | Published | Draft" status tabs.
+ *
+ * Available variables:
+ * - tabs: keyed render arrays of link elements (all, published, draft).
+ */
+#}
+<ul class="drupress-status-tabs">
+  {% for tab in tabs %}
+    <li class="drupress-status-tabs__item">{{ tab }}</li>
+  {% endfor %}
+</ul>

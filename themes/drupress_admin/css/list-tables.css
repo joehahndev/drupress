@@ -105,3 +105,51 @@
   border: 1px solid var(--drupress-border-light);
   box-shadow: 0 1px 1px rgb(0, 0, 0, 0.04);
 }
+
+/* The native "Published status" select is superseded by the status tabs
+ * below; the identifier/query param it exposes still drives filtering. */
+.drupress-route .views-exposed-form .js-form-item-status {
+  display: none;
+}
+
+/* ------------------------------------------------------------------------
+ * Status tabs: All | Published | Draft — wp-admin's subtitle-actions bar.
+ * ------------------------------------------------------------------------ */
+
+.drupress-status-tabs {
+  display: flex;
+  gap: 0;
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+  font-size: 0.8125rem;
+  color: var(--drupress-text-muted);
+}
+
+.drupress-status-tabs__item {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.drupress-status-tabs__item + .drupress-status-tabs__item::before {
+  content: "|";
+  margin: 0 8px;
+  color: var(--drupress-border);
+}
+
+.drupress-status-tabs a {
+  text-decoration: none;
+  color: var(--drupress-accent);
+}
+
+.drupress-status-tabs a:hover {
+  color: var(--drupress-accent-hover);
+}
+
+.drupress-status-tabs a.is-active {
+  color: var(--drupress-text);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: default;
+}
