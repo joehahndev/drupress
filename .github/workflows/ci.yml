@@ -14,3 +14,5 @@ jobs:
         modules/drupress:web/modules/custom/drupress
         themes/drupress_admin:web/themes/custom/drupress_admin
       phpstan-level: '6'
+      # Drupress requires Drupal 11.1+; see the info.yml files.
+      drupal-versions: '["^11.4"]'
