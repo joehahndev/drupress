@@ -1,0 +1,15 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  drupal:
+    uses: joehahndev/drupal-module-ci/.github/workflows/drupal.yml@main
+    with:
+      install-map: |
+        modules/drupress:web/modules/custom/drupress
+        themes/drupress_admin:web/themes/custom/drupress_admin
+      phpstan-level: '6'
