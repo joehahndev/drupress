@@ -8,7 +8,7 @@ on:
 
 jobs:
   drupal:
-    uses: joehahndev/drupal-module-ci/.github/workflows/drupal.yml@main
+    uses: joehahndev/drupal-module-ci/.github/workflows/drupal.yml@v1
     with:
       install-map: |
         modules/drupress:web/modules/custom/drupress
