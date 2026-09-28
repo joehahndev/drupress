@@ -1,5 +1,7 @@
 # Drupress
 
+[![CI](https://github.com/joehahndev/drupress/actions/workflows/ci.yml/badge.svg)](https://github.com/joehahndev/drupress/actions/workflows/ci.yml)
+
 **A WordPress-style admin experience for Drupal 11.**
 
 Drupress makes the Drupal administration and content-editing experience look
